@@ -1,0 +1,199 @@
+%%%%%%%%%%%字体大小
+\newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}
+\newcommand{\xiaochuhao}{\fontsize{36pt}{\baselineskip}\selectfont}
+\newcommand{\yihao}{\fontsize{26pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoyihao}{\fontsize{24pt}{\baselineskip}\selectfont}
+\newcommand{\erhao}{\fontsize{22pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoerhao}{\fontsize{18pt}{\baselineskip}\selectfont}
+\newcommand{\sanhao}{\fontsize{16pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosanhao}{\fontsize{15pt}{\baselineskip}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}
+\newcommand{\liuhao}{\fontsize{7.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoliuhao}{\fontsize{6.5pt}{\baselineskip}\selectfont}
+\newcommand{\qihao}{\fontsize{5.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoqihao}{\fontsize{5pt}{\baselineskip}\selectfont}
+%%%%%%%%%%%%目录
+% 定义章节标题格式
+% 带编号的章节标题
+% 带编号的章节标题
+
+
+% 定义目录内容格式
+% \titlecontents{chapter}[0pt]
+%   {\vspace{1ex}\bfseries\sffamily\sihao}
+%   {\thecontentslabel\quad}
+%   {}{\hfill\contentspage}
+% \titleformat{\chapter}[display]
+%   {\sffamily\xiaosanhao\bfseries}{\chaptertitlename\ \thechapter}{1em}{\vspace{1.5ex}}
+% % 不带编号的章节标题
+% \titleformat{name=\chapter,numberless}[display]
+%   {\sffamily\xiaosanhao\bfseries}{\titlerule[1pt]\vspace{1ex}\filcenter}{}{}
+
+
+% 定义目录内容格式
+% \titlecontents{chapter}[0pt]
+%   {\vspace{1ex}\bfseries\sffamily\sihao}
+%   {\thecontentslabel\quad}
+%   {}{\hfill\contentspage}
+% \titlecontents{chapter}[0pt]{\vspace{0.5\baselineskip}\bfseries\sffamily\sihao}
+% {\thecontentslabel\quad}{}{\hfill\contentspage}
+%\setcounter{tocdepth}{3}
+%\setcounter{secnumdepth}{3}
+\dottedcontents{chapter}[1.8cm]{\fontsize{14pt}{14pt}\selectfont\heiti\vspace{0.5cm}}{4.0em}{10pt}
+%\dottedcontents{section}[0.8cm]{}{1.8em}{5pt}
+%\dottedcontents{subsection}[1.9cm]{}{2.7em}{5pt}
+%\dottedcontents{subsubsection}[2.86cm]{}{3.4em}{5pt}
+%====================== 定制图形和表格标题样式 =====================%
+%---------------------- 定制图形和表格标题格式 ---------------------%
+\renewcommand{\captionlabeldelim}{} %定义如  "图(表)2: 示例" 中的间隔符号,如 ":" ,这里定义为空
+\renewcommand{\captionlabelsep}{\hspace{1em}} %定义图表编号与标题间的间隔距离
+\renewcommand{\captionlabelfont}{\small \heiti\bf} %定义图表标签的字体
+\renewcommand{\captionfont}{\small \songti\rmfamily} %定义图表标题内容的字体
+%% \scriptsize \footnotesize \small \large \Large  %图形标签字体大小
+%\renewcommand\arraystretch{1.5}
+%--------------------- 定义图、表、公式的编号格式 -------------------%
+\renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
+\renewcommand{\theequation}{\arabic{chapter}-\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
+%\renewcommand{\thetable}{\arabic{chapter}-\arabic{tabular}}
+
+%%%%%%%页眉页脚
+% 定义页眉与正文间双隔线
+\newcommand{\makeheadrule}{%
+    \makebox[0pt][l]{\rule[.7\baselineskip]{\headwidth}{0.3pt}}%0.4
+    \rule[0.85\baselineskip]{\headwidth}{1.5pt}\vskip-.8\baselineskip}%1.5 0.4->0.5
+\makeatletter
+\renewcommand{\headrule}{%
+    {\if@fancyplain\let\headrulewidth\plainheadrulewidth\fi
+     \makeheadrule}}
+\makeatother
+%如果需要画单隔线，则需要
+%\iffalse%-------------------------------%
+%\renewcommand{\headrulewidth}{0.5pt}    %在页眉下画一个0.5pt宽的分隔线
+%\renewcommand{\footrulewidth}{0pt}      % 在页脚不画分隔线。
+%\fi%-------------------------------------%
+
+\pagestyle{fancyplain}
+
+%\renewcommand{\chaptermark}[1]%
+%{\markboth{\CTEXthechapter \ #1}{}}            % \chaptermark 去掉章节标题中的数字
+%\renewcommand{\sectionmark}[1]%
+%{\markright{\thesection \ #1}{}}            % \sectionmark 去掉章节标题中的数字
+\fancyhf{}  %清除以前对页眉页脚的设置
+
+%\fancyhead[LE]{\songti\rightmark}     % 在book文件类别下,
+\fancyhead[RO,LE]{\songti\leftmark}% \leftmark自动存录各章之章名,
+
+\fancyfoot[C]%[RE][LO]
+%{\CJKfamily{hei} 第\thepage页,共\pageref{LastPage}页}
+{-\,\thepage\,-}
+
+%如果要要改变封面和章首页的页眉和页脚，则需要
+%\iffalse%----------------------------------------%
+%\fancypagestyle{plain}
+%{
+%\fancyhead{}                                    % clear all header fields
+%\fancyhead[LE,RO]{\leftmark}
+%\renewcommand{\headrulewidth}{0pt}
+%\fancyfoot{}                                    % clear all footer fields
+%\fancyfoot[CE,CO]{\thepage}
+%}
+%\fi%--------------------------------------------%
+
+% 增加 \upcite 命令使显示的引用为上标形式
+% \newcommand{\upcite}[1]{$^{\mbox{\scriptsize \cite{#1}}}$}             % 方法1
+%\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}  % 方法2
+%=============================== 脚注 =============================%
+%\renewcommand{\thefootnote}{\arabic{footnote}}
+%detcounter{footnote}{0}
+
+%==================== 定义题头格言的格式 ==========================%
+% 用法 \begin{Aphorism}{author}
+%         aphorism
+%      \end{Aphorism}
+%\newsavebox{\AphorismAuthor}
+%\newenvironment{Aphorism}[1]
+%{\vspace{0.5cm}\begin{sloppypar} \slshape
+%\sbox{\AphorismAuthor}{#1}
+%\begin{quote}\small\itshape }
+%{\\ \hspace*{\fill}------\hspace{0.2cm} \usebox{\AphorismAuthor}
+%\end{quote}
+%\end{sloppypar}\vspace{0.5cm}}
+
+%============================== 控制表格线宽 ==========================%
+%\makeatletter
+%\def\hlinewd#1{%
+%  \noalign{\ifnum0=`}\fi\hrule \@height #1 \futurelet
+%   \reserved@a\@xhline}
+%\makeatother
+%\newcommand\vlinewd[1][1pt]{\vrule width #1}
+
+%========================== 其它自定义 ==============================%
+%====================================================================%
+% 下面定义的命令（\alpheqn \reseteqn）可以使公式编号变为 4-a，4-b
+% 使用说明：\alpheqn 为开始产生处，\reseteqn为恢复原来公式编号形式处
+% 这两个命令为自定义，使用时应注意：不可放于 数学环境中！！！
+% 在公式开始前和结束后使用！！！
+%====================================================================%
+%\newcounter{saveeqn}%
+%
+%\newcommand{\alpheqn}{%
+%\setcounter{saveeqn}{\value{equation}}%
+%\stepcounter{saveeqn}%
+%\setcounter{equation}{0}%
+%%\renewcommand{\theequation}{\arabic{saveeqn}-\alph{equation}}}%%article 中的定义
+%\renewcommand{\theequation}{\arabic{chapter}-\arabic{saveeqn}\alph{equation}}}%book %中的定义
+%%{\mbox{\arabic{equation}-\alph{equation}}}}%
+%
+%\newcommand{\reseteqn}{%
+%\setcounter{equation}{\value{saveeqn}}%
+%%%\renewcommand{\theequation}{\arabic{equation}}}    %article 中的定义
+%\renewcommand{\theequation}{\arabic{chapter}-\arabic{equation}}}  %book 中的定义
+%
+
+
+%定义新的命令\rmnum，\Rmnum，用来显示大小写罗马数字
+%用法：\rmnum{数字}，\Rmnum{数字}
+%\makeatletter
+%\newcommand{\rmnum}[1]{\romannumeral #1}
+%\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+%\makeatother
+%\CTEXsetup[format={\Large\bfseries}]{section}
+%%%%%%
+\ctexset{
+	  %ontset = founder ,
+      chapter={
+	    format = {\raggedright\zihao{-3}\songti},
+%	    name = {,、},
+	    beforeskip ={-20pt},
+	    afterskip = {11pt},
+	    number=\arabic{chapter},
+	    %tocline = {\CTEXnumberline{#1}#2},
+	    },
+	section = {
+	format = {\raggedright\zihao{4}\songti},
+%	name ={(,)},
+%	number = \chinese{section},
+	},
+	subsection ={
+	format ={\zihao{-4}\songti},
+%	name ={,.},
+%	number=\arabic{subsection},
+	},
+  subsubsection ={
+  	format ={\zihao{-4}\songti},
+  %	name ={,.},
+  %	number=\arabic{subsection},
+  	},
+}
+% \titleformat{\subsection}{\left\heiti}{\thesubsection}{1em}
+%%%%%%%align公式跨页
+\allowdisplaybreaks[4]
+\def\urlprefix{url:}
+
+% % 设置页面底部对齐
+\raggedbottom
+% \flushbottom

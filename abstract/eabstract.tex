@@ -1,0 +1,21 @@
+\begin{center}
+\xiaoerhao\bf Research on Parallel Phase Shift Deep Neural Network Model and Algorithm
+\end{center}
+\vspace{0.7cm}
+\begin{center}
+	Postgraduate Student：kang Xing  ~~ \\
+	Advisor：Prof. Xiaojun Sun  ~~~~Grade：2020\\
+	Major：Systems Science	~~~~Direction： Theory and Applications of Complex Networks\\%High-Energy Nuclear Physics  \\
+\end{center}
+\vspace{0.5cm}
+\centerline{\bf\sanhao Abstract}
+\vspace{0.1cm}
+\par
+As experimental nuclear physics has developed, the categories and quantities of nuclear data have become increasingly diverse, and the application of machine learning methods in the field of nuclear physics has become more and more widespread. However, no one has yet ventured into the field of neutron resonance cross sections. The resonance cross section of the neutron-induced fission reaction of the fuel nucleus $^{235}$U has low-frequency, high-frequency, and indistinguishable resonance regions, and these resonance fission cross sections are several orders of magnitude greater than the fission cross sections in the fast neutron energy range. This has very important practical applications and academic value in fields such as new generation nuclear energy technology, national defense strategic weapons, and basic nuclear physics research.
+
+This paper focuses on the study of the resonance cross section of $^{235}\text{U}(n,f)$ fission, with the following three main objectives. Firstly, the applicability of the traditional deep neural network (DNN) method is theoretically analyzed and algorithmically verified for low-frequency oscillation data, but its performance is limited in high-frequency oscillation data. Secondly, the parallel phase shift deep neural network (PPSDNN) model is developed based on the DNN, drawing on the parallel phase shift theory (PPS), which is capable of simultaneously handling resonant fission cross sections with low and high frequency changes. This model mainly includes the following aspects: (1) Fourier transform and Nyquist sampling theorem, where the Fourier transform can transform the target function from the time domain space to the frequency domain space, and the Nyquist sampling theorem reveals the minimum sampling frequency required to avoid distortion; (2) unit decomposition theorem, which can decompose the target function into several parts; (3) B-spline function, which can be used to construct functions that satisfy the unit decomposition; (4) the implementation of parallel phase shift in the frequency domain space, which is the core of the PPSDNN algorithm, and can shift the target function from high frequency to low frequency. Finally, in order to apply the model, this paper develops a program code using the Python language by constructing an algorithm. The algorithm's main idea is to first decompose the target function into several parts using unit decomposition, and then directly use DNN to train the low-frequency part and obtain the best result. For the high-frequency part, the target function is shifted from high frequency to low frequency using parallel phase shift in the frequency domain space with the Fourier transform. In the second step, the DNN is used to train these low-frequency functions and the training results are restored to high-frequency oscillation data. In the third step, the training results of the various target functions are superimposed to obtain the final training result for the target function. Through the evaluation of the $^{235}\text{U}(n,f)$ fission resonance cross-section library data, the PPSDNN model is found to achieve good results and lay a solid foundation for further targeting experimental data and obtaining the neutron resonance parameters needed for engineering, with great potential for application.
+
+
+\par
+\vspace{0.5cm}
+\noindent{\bf Keywords：} {$^{235}\text{U}(n,f)$；Neutron resonance cross section; Deep Neural Network method; Parallel Phase Shift Deep Neural Network model; Algorithm}

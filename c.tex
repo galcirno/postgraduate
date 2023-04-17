@@ -1,0 +1,78 @@
+\documentclass[12pt,a4paper,openany]{ctexbook}%%%%字体大小默认为12pt(小四)
+%\documentclass[12pt,a4paper,oneside]{ctexbook}%%%%字体大小默认为12pt(小四)
+% \usepackage{subfigure}
+\usepackage[sort]{gbt7714}
+% \citestyle{numbers}
+\newtheorem{thm}{定理}
+\input{setting/package}
+\input{setting/format}
+\graphicspath{{figures/}}
+
+
+\begin{document}
+% \frontmatter %前言部分，页码为小写罗马字母格式；其后的\chapter 不编号。
+\input{cover/ccover}
+% \includepdf{cover/a.pdf}
+\input{cover/cover}
+\pagenumbering{Roman}
+\begin{spacing}{1.5}%%%控制间距
+\cleardoublepage
+\include{abstract/cabstract}
+\cleardoublepage
+\include{abstract/eabstract}
+\cleardoublepage
+\begingroup
+\ctexset{chapter={format=\xiaosanhao\bfseries\centering\songti\linespread{1.5}}}
+\tableofcontents%%%%目录
+\listoffigures%%%%插图目录
+% \listoftables%%%%表格目录
+\endgroup
+
+\renewcommand{\labelenumi}{(\arabic{enumi})}%%%item标号形式
+\cleardoublepage%%%%%%从奇数页开始正文
+%\renewcommand\arraystretch{1.5}%%%表格行距1.5
+%\input{format01.tex}
+\pagenumbering{arabic}
+%\mainmatter    %表示开始正文部分的内容 使用数字进行页面编号，对其中的chapter进行编号（第一章、第二章……）
+% \mainmatter
+\include{chap/chap01}
+\include{chap/chap02}
+\include{chap/chap03}
+\include{chap/chap04}
+%\setcounter{secnumdepth}{0}%%编号深度,0为只对chaptter编号,section不编号
+%\setcounter{tocdepth}{0}%%目录深度,但不知为何不起作用
+
+\appendix
+
+\renewcommand{\theequation}{\Alph{chapter}-\arabic{equation}}
+\renewcommand{\thesubsubsection}{\arabic{subsubsection}.}
+\setcounter{secnumdepth}{3}
+%\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}%%%没有tocvsec2宏包时可用这个
+%\renewcommand\thesubsubsection{\arabic{subsubsection}}
+% \settocdepth{chapter}
+% \include{appendix/appendixA}
+% \include{appendix/appendixB}
+% \titlecontents{chapter}[-4pt]{\addvspace{0pc}\heiti\sihao}{}{}{}
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{参考文献}
+\bibliographystyle{gbt7714-numerical}
+% \bibliography{standard}
+% \bibliographystyle{whl}
+\bibliography{b}
+\backmatter%后记部分，页码格式不变，继续正常计数；其后的\chapter 不编号。
+\titlecontents{chapter}[-4pt]{\addvspace{0pc}\heiti\sihao}{}{}{}
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{致谢}
+\include{appendix/acknowledgements}
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{论文独创性声明}
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{论文使用授权声明}
+\include{appendix/announce}
+% \includepdf{appendix/announce.pdf}
+\end{spacing}
+\end{document}
