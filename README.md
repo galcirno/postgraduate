@@ -25,7 +25,7 @@ xelatex
     更多内容请查看ctex官方文档:`texdoc ctex`
 
 - 针对个别段落之间段间距过大，在format.tex中加入`\raggedbottom`即可，但不清楚会不会出现其他问题，如果出现，使用默认的`\flushbottom`
-- 带章节编号的图片标题格式为`图几扛几`，若想在`\ref`图片时格式统一，需要把label标签放在figure标签里面，且在caption标签后面(这样一定是对的)
+- 带章节编号的图片标题格式为`图几-几`，若想在`\ref`图片时格式统一，需要把label标签放在figure标签里面，且在caption标签后面(这样一定是对的)
 - 针对参考文献及其之后的标题在目录中无法正确跳转，需要在c.tex中加入
     ```tex
     \clearpage
