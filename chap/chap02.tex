@@ -39,7 +39,7 @@ T^{l}(\boldsymbol{x}) & =\left[\Theta^{l} \circ \sigma\right]\left(T^{l-1}(\bold
 \begin{equation}
     L\left(\boldsymbol{W}^{0}, \boldsymbol{b}^{0}, \boldsymbol{W}^{1}, \boldsymbol{b}^{1}, \ldots, \boldsymbol{W}^{L}, \boldsymbol{b}^{L}\right)=\|f(\boldsymbol{x})-T(\boldsymbol{x})\|^{2}=\int_{-\infty}^{+\infty}|f(\boldsymbol{x})-T(\boldsymbol{x})|^{2} dx
 \end{equation}
-并使用梯度下降法最小化该损失函数。同时，根据帕萨瓦尔等式\cite{姚端正1997数学物理方法,hughes1965physical}，在频域空间上的损失函数等于其在时域空间上的损失函数。定义目标函数$f(x)$的傅里叶变换及其逆变换，
+并使用梯度下降法最小化该损失函数。同时，根据帕萨瓦尔等式\cite{姚端正1997数学物理方法,hughes1965physical}，在频域空间上的损失函数等于其在时域空间上的损失函数。定义目标函数$f(x)$的傅里叶变换及其逆变换：
 \begin{equation}
     \mathcal{F}[f](k)=\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{+\infty} f(x) e^{-i k x} \mathrm{~d} x, \quad \mathcal{F}^{-1}[\widehat{f}](x)=\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{+\infty} \hat{f}(k) e^{i k x} \mathrm{~d} k
 \end{equation}
@@ -64,8 +64,12 @@ DNN的训练过程可以看成函数的数值逼近过程，根据函数的万�
     h(x)=\sum_{j=1}^{m}a_{j}\sigma(w_{j}x+b_{j}),\quad a_{j},w_{j},b_{j}\in{\rm \mathbb{R}},\label{eq: DNNmath}
 \end{equation}
 其中，$m$是神经网络的层数。
-其中激活函数为$\sigma(x)=\tanh(x)$。对该激活函数做傅里叶变换得$\hat{\sigma}(k)=-\frac{i\pi}{\sinh(\pi k/2)}$\cite{bracewell1986fourier}，计算过程大致为
-\begin{equation}
+其中激活函数为：
+\begin{equation}\label{tanh}
+    \sigma(x)=\tanh(x).
+\end{equation}
+对该激活函数做傅里叶变换得$\hat{\sigma}(k)=-\frac{i\pi}{\sinh(\pi k/2)}$\cite{bracewell1986fourier}，计算过程大致为
+\begin{equation}\label{tanh-ft}
     \begin{aligned}
       &  \int_{-\infty }^{\infty } \tanh (x)e^{-ikx}dx= \\
 &=\int_{-\infty}^{\infty} \frac{e^{x}-e^{-x}}{e^{x}+e^{-x}} e^{-i kx} d x \\
@@ -73,16 +77,17 @@ DNN的训练过程可以看成函数的数值逼近过程，根据函数的万�
 &=-\frac{i\pi}{\sinh(\pi k/2)}
 \end{aligned}
 \end{equation}
-其中，计算第一项积分可以化为$\delta$函数，当$k>0$时为零；计算第二项积分需要使用留数定理，令$t = e^x$，在半圆形围道上只需要计算一个奇点$t = i$的留数。计算结果与文献结果一致。
+计算详细过程见附录\ref{appendices a}。计算结果与文献结果一致。
 于是，根据相移特性和尺度变换特性\cite{刘树棠2010信号与系统}
-\begin{equation*}\label{}
+\begin{equation}\label{scale-ft}
     q(\omega t+b) \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{1}{|\omega|} \mathrm{e}^{i \frac{b}{\omega} \omega} Q\left(\frac{k}{\omega}\right)
-\end{equation*}
-$\sigma(w_{j}x+b_{j})$的傅里叶变换形式为
-\begin{equation}
-    \widehat{\sigma(w_{j}\cdot+b_{j})}(k)=\frac{2\pi i}{|w_{j}|}\exp\Big(\frac{i b_{j}k}{w_{j}}\Big)\frac{1}{\exp(-\frac{\pi k}{2w_{j}})-\exp(\frac{\pi k}{2w_{j}})}.\label{eq:FSigOri}
 \end{equation}
-不难看出，它随$k$的值按指数衰减，这是由激活函数$\tanh$的光滑性导致的。当$\frac{\pi k}{2\omega_j}>0$时，$\exp(-\frac{\pi k}{2w_{j}})\gg \exp(\frac{\pi k}{2w_{j}})$，DNN模型的傅里叶变换可以写成
+其中，$Q(k)$是函数$q(t)$的傅立叶变换。
+对式\ref{tanh-ft}使用变换特性\ref{scale-ft},可以得到$\sigma(w_{j}x+b_{j})$的傅里叶变换形式为
+\begin{equation}
+    \mathcal{F}[\sigma](k):=\widehat{\sigma(w_{j}\cdot+b_{j})}(k)=\frac{2\pi i}{|w_{j}|}\exp\Big(\frac{i b_{j}k}{w_{j}}\Big)\frac{1}{\exp(-\frac{\pi k}{2w_{j}})-\exp(\frac{\pi k}{2w_{j}})}.\label{eq:FSigOri}
+\end{equation}
+不难看出，它随$k$的值按指数衰减，这是由激活函数$\tanh$的光滑性导致的。设当$\frac{\pi k}{2\omega_j}>0$时，$\exp(\frac{\pi k}{2w_{j}})\gg \exp(-\frac{\pi k}{2w_{j}})$，DNN模型的傅里叶变换可以写成
 \begin{equation}
     \begin{aligned}
         \hat{h}(k)&=\sum_{j=1}^{m}\frac{2\pi a_{j}i}{|w_{j}|}\exp\Big(\frac{i b_{j}k}{w_{j}}\Big)\frac{1}{\exp(-\frac{\pi k}{2w_{j}})-\exp(\frac{\pi k}{2w_{j}})} \\
@@ -97,14 +102,14 @@ $\sigma(w_{j}x+b_{j})$的傅里叶变换形式为
   L=\int_{-\infty}^{+\infty}\frac{1}{2}(h(x)-f(x))^{2}dx
 \end{array} 
 \end{equation}
-其中，可以令$D(k)=A(k)e^{i\phi (k)}$。为了探究$L$在进行梯度下降时对频率的依赖关系，把$L(k)$对其参数求偏导，为了半定性地对其中一个参数$a_j$求偏导得：
+其中，可以令$D(k)=A(k)e^{i\phi (k)}$。为了探究$L$在进行梯度下降时对频率的依赖关系，把$L(k)$对其参数求偏导，为了半定量地对其中一个参数$a_j$求偏导得：
 \begin{equation}
     \begin{aligned}
-\frac{\partial L(k)}{\partial a_{j}}= & D(k)\frac{\partial D(k)}{\partial a} \\
+\frac{\partial L(k)}{\partial a_{j}}= & D(k)\frac{\partial D(k)}{\partial a_j} \\
 =& D(k)\exp(-\frac{\pi k}{2\omega_j})G(\theta)\label{cucao}
 \end{aligned}
 \end{equation}
-其中，$\theta$是神经网络的参数，即$\{\omega_j,b_j,a_j\}$
+其中，$\theta$是神经网络的参数，即$\{\omega_j,b_j,a_j\}$。
 通过严格的计算可以得到
 \begin{equation}
     \begin{aligned}
@@ -233,7 +238,8 @@ f-principle 可以帮助我们理解DNN在不同问题上的优势和局限性�
   \end{figure}
 
 
-为解决DNN难以学习高频数据这个问题。本文中提出的平行相移深度神经网络模型\cite{cai2019phasednn}（Parallel Phase Shift Deep Neural Network,PPSDNN）。
+为解决DNN难以学习高频数据这个问题。本文中采用平行相移深度神经网
+络模型\cite{cai2019phasednn}（Parallel Phase Shift Deep Neural Network,PPSDNN）。
 
 \section{平行相移深度神经网络模型}
 
@@ -301,14 +307,14 @@ PPSDNN算法可按如下几个模块逐步实现：
 \begin{equation}
     \begin{aligned}\mathcal{F}_{DTFT,\Delta}[g(x)](\xi)&=\frac{1}{\Delta}\sum_{M=-\infty}^\infty\bar{h}(\xi)\\ &=\frac{1}{\Delta}\sum_{M=-\infty}^\infty\hat{g}(\xi+\frac{M}{\Delta}).\end{aligned}
 \end{equation}
-在上式中，左边是离散时间中的采样，右边代表真是信号。其中，左边的$\xi \in [-\frac{1}{2\Delta },\frac{1}{2\Delta }  ]$。于是，可以得到尼奎斯特采样定理。
+在上式中，左边是离散时间中的采样，右边代表真是信号。其中，左边的$\xi \in [-\frac{1}{2\Delta },\frac{1}{2\Delta }  ]$。于是，可以得到尼奎斯特采样定理\cite{benedetto2001modern}。
 \begin{thm}
 一个有限带宽的连续信号可以被采样并且可以从它的采样中完美重构的条件为：采样频率大于真实频率的两倍。
 \end{thm}
 有了尼奎斯特采样定理，我们就能知道至少需要多少实验数据点才能学好中子共振截面的数据。
 
 \subsection{单位分解定理}
-在数学上，任意流形都能够表示成足够大的n维空间$\mathbb{R}^n$中某个曲面形式，而这可以用单位分解定理（Partition of Unity，POU）阐明。
+在数学上，任意流形都能够表示成足够大的n维空间$\mathbb{R}^n$中某个曲面形式，而这可以用单位分解定理（Partition of Unity，POU）\cite{卓里奇2019数学分析}阐明。
 
 \begin{thm}
 设M是$C^{(k)}$光滑类的流形，X是M的子集。如果函数组$E= \{e_{\alpha},\alpha \in A\}$由$e_{\alpha} = C^{(k)}(M,\mathbb{R})$组成，且满足：
@@ -362,7 +368,7 @@ $\widehat{f}(k)$上的支撑集，因为$\text{supp}\widehat{f}(k)=\{k \in \math
 
 
 \subsection{B-样条函数}
-B-样条函数是基于特征函数迭代递推得到的，它和特征函数相比具有更连续更光滑的性质。采用如下卷积迭代的方式可以定义B-样条函数
+B-样条函数\cite{prochazkova2005derivative}是基于特征函数迭代递推得到的，它和特征函数相比具有更连续更光滑的性质。采用如下卷积迭代的方式可以定义B-样条函数
 \begin{equation}
     \left\{\begin{matrix} 
 &B_{1}(k)=\chi_{\lbrack0,1)}(k),\\
