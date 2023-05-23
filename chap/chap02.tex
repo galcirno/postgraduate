@@ -24,7 +24,7 @@ $\sigma (u) = \mathbb{R}^{n}\rightarrow \mathbb{R}^{n}$。于是，一个$L+1$�
 \begin{equation}
     \begin{aligned}
 T(\boldsymbol{x}) & =T^{L}(\boldsymbol{x}) \\
-T^{l}(\boldsymbol{x}) & =\left[\Theta^{l} \circ \sigma\right]\left(T^{l-1}(\boldsymbol{x})\right), \quad l=1,2, \ldots L
+T^{l}(\boldsymbol{x}) & =\left[\Theta^{l} \circ \sigma\right]\left(T^{l-1}(\boldsymbol{x})\right), \quad l=1,2, \ldots ,L
 \end{aligned}
 \end{equation}
 且$T^{0}(x) = \Theta^{0}(x)$。通过这种递推方式，DNN也可以更简洁地表示为
@@ -87,22 +87,22 @@ DNN的训练过程可以看成函数的数值逼近过程，根据函数的万�
 \begin{equation}
     \mathcal{F}[\sigma](k):=\widehat{\sigma(w_{j}\cdot+b_{j})}(k)=\frac{2\pi i}{|w_{j}|}\exp\Big(\frac{i b_{j}k}{w_{j}}\Big)\frac{1}{\exp(-\frac{\pi k}{2w_{j}})-\exp(\frac{\pi k}{2w_{j}})}.\label{eq:FSigOri}
 \end{equation}
-不难看出，它随$k$的值按指数衰减，这是由激活函数$\tanh$的光滑性导致的。设当$\frac{\pi k}{2\omega_j}>0$时，$\exp(\frac{\pi k}{2w_{j}})\gg \exp(-\frac{\pi k}{2w_{j}})$，DNN模型的傅里叶变换可以写成
+不难看出，它随$k$的值按指数衰减，这是由激活函数$\tanh$的光滑性导致的。设当$\frac{\pi k}{2\omega_j}>0$时，$\exp(\frac{\pi k}{2w_{j}})\gg \exp(-\frac{\pi k}{2w_{j}})$，DNN模型\ref{eq: DNNmath}式的傅里叶变换可以写成
 \begin{equation}
     \begin{aligned}
         \hat{h}(k)&=\sum_{j=1}^{m}\frac{2\pi a_{j}i}{|w_{j}|}\exp\Big(\frac{i b_{j}k}{w_{j}}\Big)\frac{1}{\exp(-\frac{\pi k}{2w_{j}})-\exp(\frac{\pi k}{2w_{j}})} \\
 & \approx -\sum_{j=1}^{m}\frac{2\pi a_{j}i}{|w_{j}|}\exp\Big(\frac{i b_{j}k}{w_{j}}\Big)\exp(-\frac{\pi k}{2w_{j}})
 \end{aligned}
 \end{equation}
-由于目标函数为$f(x)$，于是DNN在频域空间上的损失函数可以定义成$L$，$L$由如下公式给出
+由于目标函数为$f(x)$，于是DNN在频域空间上的损失函数可以定义成$L(k)$，$L(k)$由如下公式给出
 \begin{equation}
 \begin{array}{l}  
   D(k)\triangleq\hat{h}(k)-\hat{f}(k)  \\  
-  L(k)=\frac{1}{2}\left|D(k)\right|^{2}  \\  
+  L_i(k)=\frac{1}{2}\left|D(k)\right|^{2}  \\  
   L=\int_{-\infty}^{+\infty}\frac{1}{2}(h(x)-f(x))^{2}dx
 \end{array} 
 \end{equation}
-其中，可以令$D(k)=A(k)e^{i\phi (k)}$。为了探究$L$在进行梯度下降时对频率的依赖关系，把$L(k)$对其参数求偏导，为了半定量地对其中一个参数$a_j$求偏导得：
+其中，可以令$D(k)=A(k)e^{i\phi (k)}$。为了探究$L(k)$在进行梯度下降时对频率的依赖关系，把$L(k)$对其参数求偏导，为了半定量地对其中一个参数$a_j$求偏导得：
 \begin{equation}
     \begin{aligned}
 \frac{\partial L(k)}{\partial a_{j}}= & D(k)\frac{\partial D(k)}{\partial a_j} \\
@@ -162,7 +162,7 @@ B_{\delta}\right)  }{\mu(B_{\delta})}>1-C\exp(-c/\delta)
 $C>0$ .
 \end{thm}
 
-此即PPSDNN的基础，当$\delta \rightarrow 0$时，在基于梯度训练的DNN中，对于损失函数$L = \int_{-\infty }^{\infty } L(k)dk$，低频的梯度会大于高频的梯度，即低频数据的收敛速度要比高频数据的收敛速度快。
+此即PPSDNN的基础，当$\delta \rightarrow 0$时，在基于梯度训练的DNN中，对于损失函数$L(k) = \int_{-\infty }^{\infty } L_i(k)dk$，低频的梯度会大于高频的梯度，即低频数据的收敛速度要比高频数据的收敛速度快。
 
 下面构造一个有噪声的正弦函数，将其生成的数组作为DNN的训练集，训练结果如图\ref{fprinciple1}所示。图(a)中的训练数据是正弦函数加上噪声的数据，使用DNN进行训练，并在测试集损失函数变大时（如图（b）所示）提前停止训练，发现DNN可以很好的学习到正弦函数的大致趋势，但因为噪声属于高频数据，所以无法很好的学习噪声。
 
@@ -514,7 +514,7 @@ B_{m}^{\vee}(x)  &  =\left(  B_{1}^{\vee}(x)\right)  ^{m}=\left(  \frac
        &\overset{k''=k'-j}{=}\frac{1}{\sqrt[]{2\pi } }\int_{\mathcal{R} }^{}  (\Delta k)dk''\phi (k'')e^{i(k''+j)\Delta kx}\\
        &=\Delta ke^{-ij\Delta kx}\phi^{\vee}(\Delta kx)=K_0e^{-ijK_{0}x}%
        \phi^{\vee}(K_{0}x),
-       \end{aligned},
+       \end{aligned}.
 \end{equation}
 下面求$\phi_{j}(k)$的支撑集。由前面的定义和结论，显然，有$supp\phi _j(k)=supp\mathcal{F}[\phi_{j}^{\vee}(x)]$。于是，根据$0\le \frac{k}{\Delta k}+2-j<4$得，$\omega_{j-2}\le k<\omega_{j+2}$，即
 \begin{equation}
@@ -669,7 +669,22 @@ f(x) \approx f_{\text{DNN}}(x)+%
 %EndExpansion
 e^{-i\omega_{j}x}T_{j}(x,\theta^{(n_{0})}). \label{DNNupdate}%
 \end{equation}
-以上便是PPSDNN的全部算法。本算法可以使用python语言实现，用pytorch\cite{ketkar2021introduction}编写，算法大致流程如图\ref{ppsdnnchart}：
+以上便是PPSDNN的全部算法。本算法可以使用python语言实现，用pytorch\cite{ketkar2021introduction}编写。
+
+pytorch提供了专门的fft包用于计算傅立叶变换，傅立叶变换是fft，逆变换是ifft。另外，pytorch还提供了一个非常有用的函数：fftfreq，它可以得到离散傅立叶变换的采样频率。
+特别值得关注的是，当$T(x)$是复函数时，可以用傅立叶级数展开：
+\begin{equation}\label{}
+    T(x)=\sum_{m=1}^{M} e^{i \omega_{m} x} T_{m}(x)
+\end{equation}
+在本工作中，$T(x)$是实函数，它可以用下面的级数作展开：
+\begin{equation}\label{}
+    T(x)=\sum_{m=1}^{M} A_{m} \cos \left(\omega_{m} x\right)+B_{m} \sin \left(\omega_{m} x\right).
+\end{equation}
+其中$\omega_{m}$是相移频率。
+在pytorch中，通常用torch.nn, torch.nn.Module等模块来定义神经网络模型和神经网络的前向传播。使用torch.optim指定DNN的优化器。
+使用torch.autograd.grad, optimizer.step和backward函数进行神经网络的反向传播过程。
+
+算法大致流程如图\ref{ppsdnnchart}所示：
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\linewidth]{figures/ppsdnnchart.pdf}
