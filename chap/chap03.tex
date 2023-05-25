@@ -74,7 +74,7 @@
     \end{equation}
     其中$\{\omega_{m}\}_{m=1}^M$是和目标函数有关的频率空间。将指数项写成实数的形式为
     \begin{equation}\label{eq:CPDNNreal}%
-      T(x)=\sum_{m=1}^{M}A_{m}\cos(\omega_{m}x)+B_{m}\sin(\omega_{m}x)
+      T(x)=\sum_{m=1}^{M}A_{m}\cos(\omega_{m}x)+B_{m}\sin(\omega_{m}x),
       \end{equation}
     于是，我们可以定义并最小化损失函数：
     \begin{equation}
@@ -117,7 +117,7 @@
 \section{$^{235}\text{U}(n,f)$评价库数据测试结果}
 根据核反应的复合核理论，当中子与靶核形成复合核时，复合核的激发能为
 \begin{equation}\label{}
-  E^{\ast } = \frac{m_A}{m_n+m_A}E_n+B_{nA}
+  E^{\ast } = \frac{m_A}{m_n+m_A}E_n+B_{nA}.
 \end{equation}
 其中，$m_A$为靶核的质量，$m_n$为中子的质量，$E_n$为入射中子的相对动能，$B_{nA}$为中子与靶核的结合能。当形成的复合核能级等于$E^{\ast }$时，入射粒子被强烈吸收，形成共振峰。
 % 在此工作中，我们以$^{235}\text{U}(n,f)$反应为例，使用PPSDNN方法，对其截面数据进行学习研究。此反应的实验数据和ENDF/B-VIII.0评价库的数据如图\ref{u235expendf}所示.
