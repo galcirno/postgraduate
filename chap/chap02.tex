@@ -23,13 +23,13 @@ $b\in \mathbb{R}^m$，它们是神经网络的参数。
 $\sigma (u) = \mathbb{R}^{n}\rightarrow \mathbb{R}^{n}$。于是，一个$L+1$层的神经网络可以表示为：
 \begin{equation}
     \begin{aligned}
-T(\boldsymbol{x}) & =T^{L}(\boldsymbol{x}) \\
+T(\boldsymbol{x}) & =T^{L}(\boldsymbol{x}), \\
 T^{l}(\boldsymbol{x}) & =\left[\Theta^{l} \circ \sigma\right]\left(T^{l-1}(\boldsymbol{x})\right), \quad l=1,2, \ldots ,L
 \end{aligned}
 \end{equation}
 且$T^{0}(x) = \Theta^{0}(x)$。通过这种递推方式，DNN也可以更简洁地表示为
 \begin{equation}
-    T(\boldsymbol{x})=\Theta^{L} \circ \sigma \circ \Theta^{L-1} \circ \sigma \cdots \circ \Theta^{1} \circ \sigma \circ \Theta^{0}(\boldsymbol{x})
+    T(\boldsymbol{x})=\Theta^{L} \circ \sigma \circ \Theta^{L-1} \circ \sigma \cdots \circ \Theta^{1} \circ \sigma \circ \Theta^{0}(\boldsymbol{x}).
 \end{equation}
 其中，$\Theta ^{l}(x)=W^{l}x+b^{l}:\mathbb{R}^{n^{(l)}}\rightarrow \mathbb{R}^{n^{(l+1)}}$。这样的DNN模型一共有$L$个隐藏层，且第$l$个隐藏层有$n^{(l)}$个神经元。
 
@@ -37,19 +37,19 @@ T^{l}(\boldsymbol{x}) & =\left[\Theta^{l} \circ \sigma\right]\left(T^{l-1}(\bold
 
 为了使DNN逼近目标函数，定义损失函数：
 \begin{equation}
-    L\left(\boldsymbol{W}^{0}, \boldsymbol{b}^{0}, \boldsymbol{W}^{1}, \boldsymbol{b}^{1}, \ldots, \boldsymbol{W}^{L}, \boldsymbol{b}^{L}\right)=\|f(\boldsymbol{x})-T(\boldsymbol{x})\|^{2}=\int_{-\infty}^{+\infty}|f(\boldsymbol{x})-T(\boldsymbol{x})|^{2} dx
+    L\left(\boldsymbol{W}^{0}, \boldsymbol{b}^{0}, \boldsymbol{W}^{1}, \boldsymbol{b}^{1}, \ldots, \boldsymbol{W}^{L}, \boldsymbol{b}^{L}\right)=\|f(\boldsymbol{x})-T(\boldsymbol{x})\|^{2}=\int_{-\infty}^{+\infty}|f(\boldsymbol{x})-T(\boldsymbol{x})|^{2} dx.
 \end{equation}
 并使用梯度下降法最小化该损失函数。同时，根据帕萨瓦尔等式\cite{姚端正1997数学物理方法,hughes1965physical}，在频域空间上的损失函数等于其在时域空间上的损失函数。定义目标函数$f(x)$的傅里叶变换及其逆变换：
 \begin{equation}
-    \mathcal{F}[f](k)=\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{+\infty} f(x) e^{-i k x} \mathrm{~d} x, \quad \mathcal{F}^{-1}[\widehat{f}](x)=\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{+\infty} \hat{f}(k) e^{i k x} \mathrm{~d} k
+    \mathcal{F}[f](k)=\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{+\infty} f(x) e^{-i k x} \mathrm{~d} x, \quad \mathcal{F}^{-1}[\widehat{f}](x)=\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{+\infty} \hat{f}(k) e^{i k x} \mathrm{~d} k.
 \end{equation}
 令$D(k)=\mathcal{F}[T-f](k)=A(k) e^{i \varphi(k)}, L(k)=|D(k)|^{2}$，根据帕萨瓦尔等式得：
 \begin{equation}
-L\left(\boldsymbol{W}^0, \boldsymbol{b}^0, \boldsymbol{W}^1, \boldsymbol{b}^1, \ldots, \boldsymbol{W}^L, \boldsymbol{b}^L\right)=\int_{-\infty}^{+\infty} L(k) dk
+L\left(\boldsymbol{W}^0, \boldsymbol{b}^0, \boldsymbol{W}^1, \boldsymbol{b}^1, \ldots, \boldsymbol{W}^L, \boldsymbol{b}^L\right)=\int_{-\infty}^{+\infty} L(k) dk.
 \end{equation}
 在DNN的参数空间可以表示为
 \begin{equation}
-\theta=\left(\boldsymbol{W}_1^0, \boldsymbol{W}_2^0 \ldots, \boldsymbol{W}_{n^1}^0, \boldsymbol{b}^0, \boldsymbol{W}_{11}^1, \ldots, \boldsymbol{W}_{n^1 n^2}^1, \boldsymbol{b}_1^1 \ldots \boldsymbol{b}_{n^2}^1 \ldots\right) \in \mathbb{R}^p
+\theta=\left(\boldsymbol{W}_1^0, \boldsymbol{W}_2^0 \ldots, \boldsymbol{W}_{n^1}^0, \boldsymbol{b}^0, \boldsymbol{W}_{11}^1, \ldots, \boldsymbol{W}_{n^1 n^2}^1, \boldsymbol{b}_1^1 \ldots \boldsymbol{b}_{n^2}^1 \ldots\right) \in \mathbb{R}^p.
 \end{equation}
 其中，DNN参数个数为$p=2n^2+\left(n^1+1\right) \times n^2+\left(n^2+1\right) \times n^3+\ldots\left(n^L+1\right)$
 
@@ -80,7 +80,7 @@ DNN的训练过程可以看成函数的数值逼近过程，根据函数的万�
 计算详细过程见附录\ref{appendices a}。计算结果与文献结果一致。
 于是，根据相移特性和尺度变换特性\cite{刘树棠2010信号与系统}
 \begin{equation}\label{scale-ft}
-    q(\omega t+b) \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{1}{|\omega|} \mathrm{e}^{i \frac{b}{\omega} \omega} Q\left(\frac{k}{\omega}\right)
+    q(\omega t+b) \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{1}{|\omega|} \mathrm{e}^{i \frac{b}{\omega} \omega} Q\left(\frac{k}{\omega}\right).
 \end{equation}
 其中，$Q(k)$是函数$q(t)$的傅立叶变换。
 对式\ref{tanh-ft}使用变换特性\ref{scale-ft},可以得到$\sigma(w_{j}x+b_{j})$的傅里叶变换形式为
@@ -99,24 +99,24 @@ DNN的训练过程可以看成函数的数值逼近过程，根据函数的万�
 \begin{array}{l}  
   D(k)\triangleq\hat{h}(k)-\hat{f}(k)  \\  
   L_i(k)=\frac{1}{2}\left|D(k)\right|^{2}  \\  
-  L=\int_{-\infty}^{+\infty}\frac{1}{2}(h(x)-f(x))^{2}dx
+  L=\int_{-\infty}^{+\infty}\frac{1}{2}(h(x)-f(x))^{2}dx.
 \end{array} 
 \end{equation}
 其中，可以令$D(k)=A(k)e^{i\phi (k)}$。为了探究$L(k)$在进行梯度下降时对频率的依赖关系，把$L(k)$对其参数求偏导，为了半定量地对其中一个参数$a_j$求偏导得：
 \begin{equation}
     \begin{aligned}
 \frac{\partial L(k)}{\partial a_{j}}= & D(k)\frac{\partial D(k)}{\partial a_j} \\
-=& D(k)\exp(-\frac{\pi k}{2\omega_j})G(\theta)\label{cucao}
+=& D(k)\exp(-\frac{\pi k}{2\omega_j})G(\theta).\label{cucao}
 \end{aligned}
 \end{equation}
 其中，$\theta$是神经网络的参数，即$\{\omega_j,b_j,a_j\}$。
 通过严格的计算可以得到
 \begin{equation}
     \begin{aligned}
-\frac{\partial L(k)}{\partial a_{j}}= & \frac{2 \pi}{w_{j}} \sin \left(\frac{b_{j} k}{w_{j}}-\phi(k)\right) E_{0} \\
+\frac{\partial L(k)}{\partial a_{j}}= & \frac{2 \pi}{w_{j}} \sin \left(\frac{b_{j} k}{w_{j}}-\phi(k)\right) E_{0}. \\
 \frac{\partial L(k)}{\partial w_{j}}= & {\left[\sin \left(\frac{b_{j} k}{w_{j}}-\phi(k)\right)\left(\frac{\pi^{2} a_{j} k}{w_{j}^{3}} E_{1}-\frac{2 \pi a_{j}}{w_{j}^{2}}\right)\right.} \\
-& \left.-\frac{2 \pi a_{j} b_{j} k}{w_{j}^{3}} \cos \left(\frac{b_{j} k}{w_{j}}-\phi(k)\right)\right] E_{0} \\
-\frac{\partial L(k)}{\partial b_{j}}= & \frac{2 \pi a_{j} b_{j} k}{w_{j}^{2}} \cos \left(\frac{b_{j} k}{w_{j}}-\phi(k)\right) E_{0}
+& \left.-\frac{2 \pi a_{j} b_{j} k}{w_{j}^{3}} \cos \left(\frac{b_{j} k}{w_{j}}-\phi(k)\right)\right] E_{0}. \\
+\frac{\partial L(k)}{\partial b_{j}}= & \frac{2 \pi a_{j} b_{j} k}{w_{j}^{2}} \cos \left(\frac{b_{j} k}{w_{j}}-\phi(k)\right) E_{0}.
 \end{aligned}
 \end{equation}
 其中
@@ -139,7 +139,7 @@ E_{1} & =\frac{\exp \left(\frac{\pi k}{2 w_{j}}\right)+\exp \left(-\frac{\pi k}{
 这个特例针对的是tanh激活函数，当我们选取不同的激活函数时，这些激活函数的光滑性和正则性根据f-principle也会影响梯度下降。
 通过以上对一个特例的分析，可以总结出如下定理，定义
 \begin{equation}
-    W=\left(w_{1}, w_{2}, \cdots, w_{m}\right)^{T} \in \mathbb{R}^{m}
+    W=\left(w_{1}, w_{2}, \cdots, w_{m}\right)^{T} \in \mathbb{R}^{m}.
 \end{equation}
 有
 \begin{thm}
@@ -155,11 +155,11 @@ $\epsilon<\delta$时,有
 \[
 \frac{\mu\left(  \{\theta|\left|  \frac{\partial L(k_{1})}{\partial\theta_{j}}
 \right|  >\left|  \frac{\partial L(k_{2})}{\partial\theta_{j}} \right|  \}\cap
-B_{\delta}\right)  }{\mu(B_{\delta})}>1-C\exp(-c/\delta)
+B_{\delta}\right)  }{\mu(B_{\delta})}>1-C\exp(-c/\delta).
 \]
 对所有 $j$都成立, 其中 $B_{\delta}=\{\vec{x}\in\mathbb{R}^{p}|\left|
 \vec{x} \right|  <\delta\}$, $\mu(\cdot)$ 是 Lebesgue测度 且常数 $c>0$,
-$C>0$ .
+$C>0$.
 \end{thm}
 
 此即PPSDNN的基础，当$\delta \rightarrow 0$时，在基于梯度训练的DNN中，对于损失函数$L(k) = \int_{-\infty }^{\infty } L_i(k)dk$，低频的梯度会大于高频的梯度，即低频数据的收敛速度要比高频数据的收敛速度快。
@@ -276,13 +276,13 @@ PPSDNN算法可按如下几个模块逐步实现：
 \subsection{傅里叶变换与尼奎斯特采样定理}
 傅里叶变换是把一个函数或一些离散数据从时域空间转换到频域空间，傅里叶逆变换则是从频域空间转换到时域空间\cite{xu2018understanding}。先考虑连续傅里叶变换（CFT）和连续傅里叶逆变换（ICFT），其公式为
     \begin{equation}
-\mathcal{F}[g(x)](\xi)=\int_{-\infty}^{\infty} g(x) \mathrm{e}^{-2 \pi \mathrm{i} \xi x} \mathrm{~d} x, \quad \mathcal{F}^{-1}[\hat{g}(\xi)](x)=\int_{-\infty}^{\infty} \hat{g}(\xi) \mathrm{e}^{2 \pi \mathrm{i} \xi x} \mathrm{~d} \xi
+\mathcal{F}[g(x)](\xi)=\int_{-\infty}^{\infty} g(x) \mathrm{e}^{-2 \pi \mathrm{i} \xi x} \mathrm{~d} x, \quad \mathcal{F}^{-1}[\hat{g}(\xi)](x)=\int_{-\infty}^{\infty} \hat{g}(\xi) \mathrm{e}^{2 \pi \mathrm{i} \xi x} \mathrm{~d} \xi .
 \end{equation}
 再考虑离散时域空间上的傅里叶变换（DTFT）及其逆变换
 \begin{equation}
 \begin{aligned}
-& \mathcal{F}_{D T F T, \Delta}[g(x)](\xi)=\hat{g}_{D T F T}(\xi)=\sum_{j=-\infty}^{\infty} g(j \Delta) \mathrm{e}^{-2 \pi \mathrm{i} \xi j \Delta} \\
-& \mathcal{F}_{D T F T, \Delta}^{-1}[\hat{g}(\xi)](j)=\Delta \cdot \int_{-\frac{1}{2 \Delta}}^{\frac{1}{2 \Delta}} \hat{g}_{D T F T}(\xi) \mathrm{e}^{2 \pi \mathrm{i} \xi j \Delta} \mathrm{d} \xi
+& \mathcal{F}_{D T F T, \Delta}[g(x)](\xi)=\hat{g}_{D T F T}(\xi)=\sum_{j=-\infty}^{\infty} g(j \Delta) \mathrm{e}^{-2 \pi \mathrm{i} \xi j \Delta}, \\
+& \mathcal{F}_{D T F T, \Delta}^{-1}[\hat{g}(\xi)](j)=\Delta \cdot \int_{-\frac{1}{2 \Delta}}^{\frac{1}{2 \Delta}} \hat{g}_{D T F T}(\xi) \mathrm{e}^{2 \pi \mathrm{i} \xi j \Delta} \mathrm{d} \xi.
 \end{aligned}
 \end{equation}
 由于客观世界的数据往往是连续分布的，而我们认识的世界往往是通过离散的采样得到的数据。于是我们要尽可能在最大限度保留真实世界信息的情况下把CFT向DTFT转换。下面是转换公式的推导
@@ -291,13 +291,13 @@ PPSDNN算法可按如下几个模块逐步实现：
 & \mathcal{F}_{D T F T, \Delta}[g(x)](\xi)=\sum_{j=-\infty}^{\infty} g(j \Delta) \mathrm{e}^{-2 \pi \mathrm{i} \xi j \Delta} \\
 & =\sum_{j=-\infty}^{\infty} \int_{-\infty}^{\infty} \hat{g}\left(\xi^{\prime}\right) \mathrm{e}^{2 \pi \mathrm{i} \xi^{\prime} j \Delta} \mathrm{d} \xi^{\prime} \mathrm{e}^{-2 \pi \mathrm{i} \xi j \Delta} \\
 & =\sum_{j=-\infty}^{\infty} \sum_{M=-\infty}^{\infty} \int_{\frac{M}{\Delta}-\frac{1}{2 \Delta}}^{\frac{M}{\Delta}+\frac{1}{2 \Delta}} \hat{g}\left(\xi^{\prime}\right) \mathrm{e}^{2 \pi \mathrm{i} \xi^{\prime} j \Delta} \mathrm{d} \xi^{\prime} \mathrm{e}^{-2 \pi \mathrm{i} \xi j \Delta} \\
-& =\sum_{j=-\infty}^{\infty} \sum_{M=-\infty}^{\infty} \int_{-\frac{1}{2 \Delta}}^{\frac{1}{2 \Delta}} \hat{g}\left(\xi^{\prime}+\frac{M}{\Delta}\right) \mathrm{e}^{2 \pi \mathrm{i} \xi^{\prime} j \Delta} \mathrm{d} \xi^{\prime} \mathrm{e}^{-2 \pi \mathrm{i} \xi j \Delta} \\
+& =\sum_{j=-\infty}^{\infty} \sum_{M=-\infty}^{\infty} \int_{-\frac{1}{2 \Delta}}^{\frac{1}{2 \Delta}} \hat{g}\left(\xi^{\prime}+\frac{M}{\Delta}\right) \mathrm{e}^{2 \pi \mathrm{i} \xi^{\prime} j \Delta} \mathrm{d} \xi^{\prime} \mathrm{e}^{-2 \pi \mathrm{i} \xi j \Delta} .\\
 &
 \end{aligned}
 \end{equation}
 定义$\hat{h}\left(\xi^{\prime}\right)=\hat{g}\left(\xi^{\prime}+\frac{M}{\Delta}\right)$，得
 \begin{equation}
-\mathcal{F}_{D T F T, \Delta}[g(x)](\xi)=\frac{1}{\Delta} \sum_{M=-\infty}^{\infty} \sum_{j=-\infty}^{\infty}\left(\Delta \int_{-\frac{1}{2 \Delta}}^{\frac{1}{2 \Delta}} \hat{h}\left(\xi^{\prime}\right) \mathrm{e}^{2 \pi \mathrm{i} \xi^{\prime} j \Delta} \mathrm{d} \xi^{\prime}\right) \mathrm{e}^{-2 \pi \mathrm{i} \xi j \Delta}
+\mathcal{F}_{D T F T, \Delta}[g(x)](\xi)=\frac{1}{\Delta} \sum_{M=-\infty}^{\infty} \sum_{j=-\infty}^{\infty}\left(\Delta \int_{-\frac{1}{2 \Delta}}^{\frac{1}{2 \Delta}} \hat{h}\left(\xi^{\prime}\right) \mathrm{e}^{2 \pi \mathrm{i} \xi^{\prime} j \Delta} \mathrm{d} \xi^{\prime}\right) \mathrm{e}^{-2 \pi \mathrm{i} \xi j \Delta} .
 \end{equation}
 通过逆DTFT得
 \begin{equation}
@@ -377,19 +377,19 @@ B-样条函数\cite{prochazkova2005derivative}是基于特征函数迭代递推�
 \end{equation}
 这种递推关系式也可以写成
 \begin{equation}
-    B_{m}(k)=\underbrace{B_1(k) * B_{1}(k) * \cdots * B_{1}(k)}_{m \text{个}}
+    B_{m}(k)=\underbrace{B_1(k) * B_{1}(k) * \cdots * B_{1}(k)}_{m \text{个}},
 \end{equation}
 其中$*$代表卷积，即$(f * g)(t) \stackrel{\text { def }}{=} \int_{\mathbb{R}^{n}} f(\tau) g(t-\tau) d \tau$
 可以用归纳法证明
 \begin{equation}
-    supp B_{m}(k)=[0,m)
+    supp B_{m}(k)=[0,m),
 \end{equation}
 下面，分别举m=2和m=3的例子来说明B-样条函数的支撑集以及它的连续性和光滑性。
 
 当m=2时
 \begin{equation*}
     B_{2}(k)=B_{1}(k)\star B_{1}(k)=\int_{-\infty}^{\infty}B_{1}(k-\lambda)B_{1}(\lambda)d\lambda=
-\int_{0}^{1}B_{1}(k-\lambda)d\lambda
+\int_{0}^{1}B_{1}(k-\lambda)d\lambda .
 \end{equation*}
 其中
 \begin{equation*}
@@ -397,18 +397,18 @@ B-样条函数\cite{prochazkova2005derivative}是基于特征函数迭代递推�
 0 \le \lambda <1,\\
 0\le k-\lambda <1
 \end{matrix}\right. 
-\Rightarrow 0\le k <2
+\Rightarrow 0\le k <2.
 \end{equation*}
 于是不难看出
 \begin{equation}
-    supp B_2(k)=[0,2)
+    supp B_2(k)=[0,2).
 \end{equation}
 通过积分，不难得出
 \begin{equation}
 B_2(k)=
     \left\{\begin{matrix} 
 k,0\le k<1\\
-2-k,1\le k<2\\
+2-k,1\le k<2.\\
 0,otherwise
 \end{matrix}\right. 
 \end{equation}
@@ -423,11 +423,11 @@ k,0\le k<1\\
 当m=3时，同理可得
 \begin{equation*}
     B_{3}(k)=B_{2}(k)\star B_{1}(k)=\int_{-\infty}^{\infty}B_{2}(k-\lambda)B_{1}(\lambda)d\lambda=
-\int_{0}^{1}B_{2}(k-\lambda)d\lambda
+\int_{0}^{1}B_{2}(k-\lambda)d\lambda .
 \end{equation*}
 且不难看出
 \begin{equation}
-    supp B_3(k)=[0,3)
+    supp B_3(k)=[0,3).
 \end{equation}
 通过积分，不难得出
 \begin{equation}
@@ -458,7 +458,7 @@ B_3(k)=
     设$\text{supp} B_m(k)=[0,m)$,则
     \begin{equation*}
     B_{m+1}(k)=B_{m}(k)\star B_{1}(k)=\int_{-\infty}^{\infty}B_{m}(k-\lambda)B_{1}(\lambda)d\lambda=
-\int_{0}^{1}B_{m}(k-\lambda)d\lambda
+\int_{0}^{1}B_{m}(k-\lambda)d\lambda .
 \end{equation*}
 其中
 \begin{equation*}
@@ -466,7 +466,7 @@ B_3(k)=
 0 \le \lambda <1,\\
 0\le k-\lambda <m
 \end{matrix}\right. 
-\Rightarrow 0\le k <m+1
+\Rightarrow 0\le k <m+1 .
 \end{equation*}
 于是，$\text{supp} B_m(k)=[0,m)$，证毕。
     \item $B_m(k)$的逆傅里叶变换
@@ -474,8 +474,8 @@ B_3(k)=
     通过卷积定理：
     \begin{equation}
         \left\{\begin{matrix} 
-& \mathcal{F} [f(x)*g(x)]= \hat{f}(k)\hat{g}(k)  \\
-& \mathcal{F}[f(x)g(x)] = \hat{f}(k)*\hat{g}(k)\Rightarrow f(x)g(x) = \mathcal{F}^{-1}[\hat{f}(k)*\hat{g}(k)] \\
+& \mathcal{F} [f(x)*g(x)]= \hat{f}(k)\hat{g}(k) , \\
+& \mathcal{F}[f(x)g(x)] = \hat{f}(k)*\hat{g}(k)\Rightarrow f(x)g(x) = \mathcal{F}^{-1}[\hat{f}(k)*\hat{g}(k)] .\\
 \end{matrix}\right. 
     \end{equation}
 其中，为了符号书写方便，把傅里叶逆变换定义为$\mathcal{F[\cdot ]}$。
@@ -495,15 +495,15 @@ B_{m}^{\vee}(x)  &  =\left(  B_{1}^{\vee}(x)\right)  ^{m}=\left(  \frac
 \subsection{相移在频域空间中的实现}
 我们以四次B-样条函数为例，构造满足单位分解的函数。首先，令$\phi(k)=B_{4}(k+2)$，接着构造
 \begin{equation}
-    \phi_j(k)=\phi(k/\Delta k-j)=B_4(\frac{k}{\Delta k}+2-j)
+    \phi_j(k)=\phi(k/\Delta k-j)=B_4(\frac{k}{\Delta k}+2-j) .
 \end{equation}
 
-可以证明，该函数满足单位分解。将$\phi_j(k)$做傅里叶逆变换，得到频率选择函数（frequency selection kernel），为了得到$\phi_{j}^{\vee}(x)$，我们先求$\phi^{\vee}(x)$，得
+可以证明，该函数满足单位分解。将$\phi_j(k)$做傅里叶逆变换，得到频率选择核（frequency selection kernel），为了得到$\phi_{j}^{\vee}(x)$，我们先求$\phi^{\vee}(x)$，得
 \begin{equation}
     \begin{aligned} 
         &\phi^{\vee}(x) =\frac{1}{\sqrt[]{2\pi } }\int_{\mathcal{R} }^{}  B_4(k+2)e^{ikx}dk \\
       &\overset{令k+2=k'}{=} \frac{1}{\sqrt[]{2\pi } }\int_{\mathcal{R} }^{}dk'B_4(k')e^{ik'x}e^{-2ix}\\
-      &=B_4^{\vee } (x)e^{-2ix}=\frac{1}{(2\pi)^2}(\frac{\sin{x/2}}{x/2})^4
+      &=B_4^{\vee } (x)e^{-2ix}=\frac{1}{(2\pi)^2}(\frac{\sin{x/2}}{x/2})^4 .
       \end{aligned}
 \end{equation}
 下面计算$\phi_j(k)$的傅里叶逆变换，的
@@ -540,7 +540,7 @@ B_{m}^{\vee}(x)  &  =\left(  B_{1}^{\vee}(x)\right)  ^{m}=\left(  \frac
 
 然后，在POU的基础上，我们对想要分解的函数f(x)做傅里叶展开（傅里叶逆变换），即
 \begin{equation}
-    f(x) = \frac{1}{\sqrt{2\pi}}\int_{\mathcal{R} }^{}dk\hat{f}(x)e^{ikx}  \label{Ff}
+    f(x) = \frac{1}{\sqrt{2\pi}}\int_{\mathcal{R} }^{}dk\hat{f}(x)e^{ikx} . \label{Ff}
 \end{equation}
 其中，$\hat{f}(k)$可以利用POU的性质分解为
 \begin{equation}
@@ -577,18 +577,18 @@ f_{j}(x)=\mathcal{F}^{-1}[\widehat{f_{j}}](x).
 由卷积定理，$\mathcal{F}[f(x)*g(x)] = \hat{f}(k)\hat{g}(k)$，即$f(x)*g(x) = \mathcal{F}^{-1}[\hat{f}(k)\hat{g}(k)]$。
 所以，
 \begin{equation}
-    f_j(x) = \phi_j^{\vee}(x)*f(x)=\int_{-\infty }^{\infty} \phi _j^{\vee}(x-s)f(s)ds
+    f_j(x) = \phi_j^{\vee}(x)*f(x)=\int_{-\infty }^{\infty} \phi _j^{\vee}(x-s)f(s)ds .
 \end{equation}
 从上式可以看出，$\phi_j^{\vee}(x)$通过卷积作用到f(x)上得到频率空间为$[\omega_j,\omega_{j+1}]=[j\Delta k,(j+1)\Delta]=[jK_0,(j+1)K_0]$的分量。$f_j(x)$在此称为频率选择函数(frequency selection kernal)。
 
 基于频率选择函数，就可以实现平行相移。
 设当函数f(x)通过傅里叶变换转换到频域空间，且$|k|<K_0$时，函数处于低频，DNN可以很好的训练f(x)的低频量。对f(x)的高频量$f_j(x)$，我们可以通过乘一个相移因子，将其转换到$|k|<K_0$的区域，具体形式为：
 \begin{equation}
-    f_j^{\text{shift}}(x) = e^{i\omega_jx}f_j(x)
+    f_j^{\text{shift}}(x) = e^{i\omega_jx}f_j(x) .
 \end{equation}
 下面分析$f_j^{\text{shift}}(x)$的频率范围，这里的推导需要用到$\delta$函数的性质。
 \begin{equation}
-    f_j^{\text{shift}}(k) = \hat{f}_j(k-\omega_j)
+    f_j^{\text{shift}}(k) = \hat{f}_j(k-\omega_j) .
 \end{equation}
 如果$f_j(k)$的支撑集为$[\omega_j,\omega_{j+1}]$，则$supp[f_j^{\text{shift}}(k)]\subset [0,K_0]$。于是，我们通过phase shift将f(x)的高频部分转换到了低频部分。于是可以将低频部分使用DNN去训练。下面介绍PPSDNN的算法流程。
 
@@ -674,7 +674,7 @@ e^{-i\omega_{j}x}T_{j}(x,\theta^{(n_{0})}). \label{DNNupdate}%
 pytorch提供了专门的fft包用于计算傅立叶变换，傅立叶变换是fft，逆变换是ifft。另外，pytorch还提供了一个非常有用的函数：fftfreq，它可以得到离散傅立叶变换的采样频率。
 特别值得关注的是，当$T(x)$是复函数时，可以用傅立叶级数展开：
 \begin{equation}\label{}
-    T(x)=\sum_{m=1}^{M} e^{i \omega_{m} x} T_{m}(x)
+    T(x)=\sum_{m=1}^{M} e^{i \omega_{m} x} T_{m}(x).
 \end{equation}
 在本工作中，$T(x)$是实函数，它可以用下面的级数作展开：
 \begin{equation}\label{}
