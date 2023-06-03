@@ -263,7 +263,7 @@ f_{j}(x), \label{x-decomp}%
 f_{j}(x)=\mathcal{F}^{-1}[\widehat{f_{j}}](x).
 \]
 谱区间为$[\omega _{j-1},\omega _{j+1}]$
-设对于低频项，频域$k\in [-K_0,k_0]$，普通DNN方法可以给出很好的近似。
+设对于低频项，频域$k\in [-K_0,K_0]$，普通DNN方法可以给出很好的近似。
 对于高频项，通过相移（phase shift）$r_{j}^{\text{shift}}(x_{i})=e^{i\omega_{j}x_{i}}r_{j}(x_{i})$，把高频数据转换成$[-K_0,k_0]$上的低频数据，进而使用DNN训练。将训练得到的结果再通过phase shift还原到高频部分。最后将训练的到的所有结果加起来就是总的训练结果。
 
 PPSDNN算法可按如下几个模块逐步实现：
@@ -512,7 +512,7 @@ B_{m}^{\vee}(x)  &  =\left(  B_{1}^{\vee}(x)\right)  ^{m}=\left(  \frac
         & \phi_{j}^{\vee}(x)=\frac{1}{\sqrt[]{2\pi } }\int_{\mathcal{R} }^{}dk\phi(\frac{k}{\Delta k}-j )e^{ikx}  \\
        &\overset{k'=k/\Delta k}{=}\frac{1}{\sqrt[]{2\pi } }\int_{\mathcal{R} }^{}  (\Delta k)dk'\phi (k'-j)e^{ik'\Delta kx}  \\
        &\overset{k''=k'-j}{=}\frac{1}{\sqrt[]{2\pi } }\int_{\mathcal{R} }^{}  (\Delta k)dk''\phi (k'')e^{i(k''+j)\Delta kx}\\
-       &=\Delta ke^{-ij\Delta kx}\phi^{\vee}(\Delta kx)=K_0e^{-ijK_{0}x}%
+       &=\Delta ke^{-ij\Delta kx}\phi^{\vee}(\Delta kx)=K_0e^{-ijK_{0}x}
        \phi^{\vee}(K_{0}x),
        \end{aligned}.
 \end{equation}
@@ -522,7 +522,7 @@ B_{m}^{\vee}(x)  &  =\left(  B_{1}^{\vee}(x)\right)  ^{m}=\left(  \frac
 \end{equation}
 
 同样，可以证明B-样条函数满足单位分解性质。
-前面假设了低频空间为$k\in [-m\Delta k,\Delta k]$，通过移项得$-m\le \frac{k}{\Delta k}\le m$。又$0\le \frac{k}{\Delta k}+2-j<4$，移项得$-2+\frac{k}{\Delta k}<j\le 2+\frac{k}{\Delta k}$。不难得出
+前面假设了低频空间为$k\in [-m\Delta k,m\Delta k]$，通过移项得$-m\le \frac{k}{\Delta k}\le m$。又$0\le \frac{k}{\Delta k}+2-j<4$，移项得$-2+\frac{k}{\Delta k}<j\le 2+\frac{k}{\Delta k}$。不难得出
 \begin{equation*}
     -m-2<j\le m+2
 \end{equation*}
@@ -544,26 +544,17 @@ B_{m}^{\vee}(x)  &  =\left(  B_{1}^{\vee}(x)\right)  ^{m}=\left(  \frac
 \end{equation}
 其中，$\hat{f}(k)$可以利用POU的性质分解为
 \begin{equation}
-\widehat{f}(k)=%
-%TCIMACRO{\dsum \limits_{j=0}^{m}}%
-%BeginExpansion
+\widehat{f}(k)=
 {\displaystyle\sum\limits_{j=-m}^{m-1}}
-%EndExpansion
-\phi_{j}(k)\widehat{f}(k)\triangleq%
-%TCIMACRO{\dsum \limits_{j=0}^{m}}%
-%BeginExpansion
+\phi_{j}(k)\widehat{f}(k)\triangleq
 {\displaystyle\sum\limits_{j=-m}^{m-1}}
-%EndExpansion
-\widehat{f_{j}}(k). \label{k-decomp}%
+\widehat{f_{j}}(k). \label{k-decomp}
 \end{equation}
 相应的，把\ref{k-decomp}式代入\ref{Ff}式，可以在时域空间里将f(x)做分解
 \begin{equation}
-f(x)=%
-%TCIMACRO{\dsum \limits_{j=0}^{m}}%
-%BeginExpansion
+f(x)=
 {\displaystyle\sum\limits_{j=0}^{m}}
-%EndExpansion
-f_{j}(x), \label{x-decomp}%
+f_{j}(x), \label{x-decomp}
 \end{equation}
 其中，
 \[

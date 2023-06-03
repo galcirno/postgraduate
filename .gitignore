@@ -25,3 +25,4 @@
 *.bak
 *.bcf
 c.pdf
+.DS_Store
