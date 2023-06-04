@@ -12,7 +12,7 @@
              10(\sin 23x + \sin 137x + \sin 203x), & \mbox{如果 }x\in [0,\pi].
            \end{cases}
   \end{equation}
-在定义域上画出函数图形，如图\ref{toy}所示：
+在定义域上画出函数图形，如图\ref{toy}所示。
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.76\linewidth]{figures/toymodel/exact.pdf}
@@ -40,7 +40,7 @@
     \item batchsize：2000
   \end{itemize}
 
-  训练结果如图\ref{sin}，训练细节如图\ref{toy1},\ref{toy2},\ref{toy3}：
+  训练的整体结果结果如图\ref{sin}所示，训练结果在各个区间的细节表现如图\ref{toy1},\ref{toy2},\ref{toy3}所示。
 \begin{figure}[htbp!]
   \centering
   \includegraphics[width=0.77\linewidth]{figures/toymodel/train.pdf}
@@ -50,19 +50,19 @@
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.76\linewidth]{figures/toymodel/train1.pdf}
-  \caption{toy model在区间$[0,1]$上的训练细节}
+  \caption{toy model在区间$[0,1]$上的训练结果}
   \label{toy1}
 \end{figure}
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.76\linewidth]{figures/toymodel/train2.pdf}
-  \caption{toy model在区间$[1,2]$上的训练细节}
+  \caption{toy model在区间$[1,2]$上的训练结果}
   \label{toy2}
 \end{figure}
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.76\linewidth]{figures/toymodel/train3.pdf}
-  \caption{toy model在区间$[2,3.14]$上的训练细节}
+  \caption{toy model在区间$[2,3.14]$上的训练结果}
   \label{toy3}
 \end{figure}
   
@@ -105,7 +105,7 @@
 
 下面介绍第二个数值例子。在实际工作中，我们学习的核数据一般都是离散的，不像第一个例子生成的函数是连续且光滑的。这时候我们就要用到频率扫荡（frequency sweep）方法。前面取的$\omega _m$都是几个离散的值，在frequency sweep中，我们可以取形如$\omega _m=-1600:10:1600$这样连续的值。我们将\ref{eq:target1}的函数稍作修改，将x小于零的部分改成阶跃函数，使它的频率空间不再那么确定，接着使用frequency sweep进行训练。
 
-训练效果如图\ref{sweep}
+训练效果如图\ref{sweep}\cite{cai2019phasednn}所示。
 \begin{figure}[htbp!]
   \centering
   \includegraphics[width=0.84\linewidth]{figures/PPSDNN/1D-square.pdf}
@@ -133,7 +133,7 @@ ENDF/B-VIII.0是美国核反应数据库ENDF的最新版本，于2018年2月2日
 在此部分，首先介绍普通DNN方法在研究$^{235}\text{U}(n,f)$反应中的应用。根据第二章的分析，由于f- principle，DNN方法更偏向于先学习低频数据，再学习高频数据，因此，在中子共振区域，在有限运算资源的情况下，DNN方法的学习效果并不会很好。
 
 由于实验数据每家测量的分歧较大，因此为了快速从实践上验证PPSDNN在中子共振中应用的可行性，本文采用ENDF/B-VIII.0的数据作为学习数据集。
-下面是使用PPSDNN方法对$^{235}\text{U}(n,f)$反应的评价库数据进行学习的结果。
+图\ref{endftrain}到图\ref{endf1}是使用PPSDNN方法对$^{235}\text{U}(n,f)$反应的评价库数据进行学习的结果。
 % 下面是使用ENDF/B-VIII.0库的学习结果。如图
 \begin{figure}[htbp!]
   \centering
@@ -144,43 +144,46 @@ ENDF/B-VIII.0是美国核反应数据库ENDF的最新版本，于2018年2月2日
 \begin{figure}[htbp!]
   \centering
   \includegraphics[width=0.84\linewidth]{figures/endftrain/G6.pdf}
-  \caption{PPSDNN方法在能量区间为$[10^{-6},10^{-5}]$MeV的学习细节}
+  \caption{PPSDNN方法在能量区间为$[10^{-6},10^{-5}]$MeV的学习结果}
   \label{endf6}
 \end{figure}
 \begin{figure}[htbp!]
   \centering
   \includegraphics[width=0.84\linewidth]{figures/endftrain/G5.pdf}
-  \caption{PPSDNN方法在能量区间为$[10^{-5},10^{-4}]$MeV的学习细节}
+  \caption{PPSDNN方法在能量区间为$[10^{-5},10^{-4}]$MeV的学习结果}
   \label{endf5}
 \end{figure}
 \begin{figure}[htbp!]
   \centering
   \includegraphics[width=0.84\linewidth]{figures/endftrain/G4.pdf}
-  \caption{PPSDNN方法在能量区间为$[10^{-4},10^{-3}]$MeV的学习细节}
+  \caption{PPSDNN方法在能量区间为$[10^{-4},10^{-3}]$MeV的学习结果}
   \label{endf4}
 \end{figure}
 \begin{figure}[htbp!]
   \centering
   \includegraphics[width=0.84\linewidth]{figures/endftrain/G3.pdf}
-  \caption{PPSDNN方法在能量区间为$[10^{-3},10^{-2}]$MeV的学习细节}
+  \caption{PPSDNN方法在能量区间为$[10^{-3},10^{-2}]$MeV的学习结果}
   \label{endf3}
-\end{figure}
-\begin{figure}[htbp!]
-  \centering
-  \includegraphics[width=0.84\linewidth]{figures/endftrain/G2.pdf}
-  \caption{PPSDNN方法在能量区间为$[10^{-2},10^{-1}]$MeV的学习细节}
-  \label{endf2}
-\end{figure}
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.84\linewidth]{figures/endftrain/G1.pdf}
-  \caption{PPSDNN方法在能量区间为$[0.1,30]]$MeV的学习细节}
-  \label{endf1}
 \end{figure}
 从图中可以看出，PPSDNN可以较好地学习到入射能为$10^{-6}\thicksim 0.001$MeV共振区的评价库数据。当入射能超过0.001MeV时，可以用来学习的数据量大大减少，且接近不可分辨共振区，因此会在一小段能区无法重现评价库数据。当能量大于0.003MeV时，PPSDNN可以学习到不可分辨共振区的数据。
 
-
 由于评价库的核数据和实验数据相比更具有光滑性，而我们的目的是根据实验数据给出一套自己的核数据评价方法。因此后续将尝试使用PPSDNN方法直接学习$^{235}\text{U}(n,f)$反应截面的实验数据。
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.63\linewidth]{figures/endftrain/G2.pdf}
+  \caption{PPSDNN方法在能量区间为$[10^{-2},10^{-1}]$MeV的学习结果}
+  \label{endf2}
+\end{figure}
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=0.63\linewidth]{figures/endftrain/G1.pdf}
+  \caption{PPSDNN方法在能量区间为$[0.1,30]]$MeV的学习结果}
+  \label{endf1}
+\end{figure}
+
+
+
+
 % 下面是学习结果
 
 % 等结果跑出来ing

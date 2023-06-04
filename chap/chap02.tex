@@ -164,7 +164,7 @@ $C>0$.
 
 此即PPSDNN的基础，当$\delta \rightarrow 0$时，在基于梯度训练的DNN中，对于损失函数$L(k) = \int_{-\infty }^{\infty } L_i(k)dk$，低频的梯度会大于高频的梯度，即低频数据的收敛速度要比高频数据的收敛速度快。
 
-下面构造一个有噪声的正弦函数，将其生成的数组作为DNN的训练集，训练结果如图\ref{fprinciple1}所示。图(a)中的训练数据是正弦函数加上噪声的数据，使用DNN进行训练，并在测试集损失函数变大时（如图（b）所示）提前停止训练，发现DNN可以很好的学习到正弦函数的大致趋势，但因为噪声属于高频数据，所以无法很好的学习噪声。
+下面构造一个有噪声的正弦函数，将其生成的数组作为DNN的训练集，训练结果如图\ref{fprinciple1}\cite{xu2019frequency}所示。图(a)中的训练数据是正弦函数加上噪声的数据，使用DNN进行训练，并在测试集损失函数变大时（如图（b）所示）提前停止训练，发现DNN可以很好的学习到正弦函数的大致趋势，但因为噪声属于高频数据，所以无法很好的学习噪声。
 
 \begin{figure}[htbp!]
     \centering
@@ -174,7 +174,7 @@ $C>0$.
 \end{figure}
 
 
-下面再举个更定量的例子，用来说明当正弦函数与其他高频函数叠加时，DNN会优先学习到更低频的部分，即正弦函数部分。从图\ref{fig:fpthree}可以看出，当DNN学习由函数$\sin (x)+\sin (5x)$生成的数据时，当epoch等于18000，神经网络可以学习处这个函数的大致趋势，并能较好的学习到$\sin (x)$的部分。只有当epoch继续增加，DNN才能学好这个函数各种高频的细节。
+下面再举个更定量的例子，用来说明当正弦函数与其他高频函数叠加时，DNN会优先学习到更低频的部分，即正弦函数部分。从图\ref{fig:fpthree}\cite{xu2019frequency}可以看出，当DNN学习由函数$\sin (x)+\sin (5x)$生成的数据时，当epoch等于18000，神经网络可以学习处这个函数的大致趋势，并能较好的学习到$\sin (x)$的部分。只有当epoch继续增加，DNN才能学好这个函数各种高频的细节。
 \begin{figure}[htbp!]
     \centering
     \subfigure[epoch:0]{
@@ -191,7 +191,7 @@ $C>0$.
     \label{fig:fpthree}
   \end{figure}
 
-从上面两个例子可以看出DNN确实可以先学习到低频部分，再学习到低频部分。那么，在学习中子共振的数据时，是不是只要我的epoch足够大，就一定能学好呢？答案显然不是，否则也没有发明PPSDNN算法的必要了。下面使用一个具体例子说明当频率稍微大一点时，传统DNN要学习好他们就必须付出极高的代价。在数值分析中，当插值函数的次数比较大时，会出现龙格现象。当使用DNN训练这类数据时，当参数数量和插值次数相仿时，就需要花费无穷大的epoch去训练他们，如图\ref{fig:fpfour}所示。有了f-principle的指导，在DNN中就不用再担龙格现象，并可以通过训练提前停止来避免过拟合。
+从上面两个例子可以看出DNN确实可以先学习到低频部分，再学习到低频部分。那么，在学习中子共振的数据时，是不是只要我的epoch足够大，就一定能学好呢？答案显然不是，否则也没有发明PPSDNN算法的必要了。下面使用一个具体例子说明当频率稍微大一点时，传统DNN要学习好他们就必须付出极高的代价。在数值分析中，当插值函数的次数比较大时，会出现龙格现象。当使用DNN训练这类数据时，当参数数量和插值次数相仿时，就需要花费无穷大的epoch去训练他们，如图\ref{fig:fpfour}\cite{xu2019frequency}所示。有了f-principle的指导，在DNN中就不用再担龙格现象，并可以通过训练提前停止来避免过拟合。
 \begin{figure}[htbp!]
     \centering
     \subfigure[epoch:250]{
@@ -213,17 +213,18 @@ $C>0$.
 
 
 f-principle 可以帮助我们理解DNN在不同问题上的优势和局限性，以及如何利用它们来设计更有效的算法。例如，在偏微分方程的数值求解中\cite{cai1996adaptive}，可以结合DNN和传统迭代方法，先利用DNN快速收敛低频部分，再用传统迭代方法细化高频部分。
-
-在中子共振核反应中，由于共振峰的存在，并根据第一章中的分析，在有限的高频共振能区中含有900多个共振峰，DNN并不能直接很好地应用于中子共振核反应的研究中。
-
-
-使用DNN训练$^{235}\text{U}(n,f)$评价库数据，如图\ref{u235fp}所示，发现DNN只能较好的学习1/v能区和不可分辨能区的数据，对共振区的数据只能学习大致趋势，无法学到共振细节。为了验证DNN的训练效果不会随着epoch显著增加，可以画出损失函数的变化趋势，如图\ref{fig:u235fploss}所示，可以看出loss值在一定epoch之后不会再发生显著下降，即神经网络的学习效果不会再变好了。
 \begin{figure}[htbp!]
     \centering
-    \includegraphics[width=0.76\linewidth]{figures/fprinciple/u235fp.jpg}
+    \includegraphics[width=0.7\linewidth]{figures/fprinciple/u235fp.jpg}
     \caption{使用tanh和relu激活函数分别对ENDF/B-VIII.0中$^{235}\text{U}(n,f)$反应截面进行学习}
     \label{u235fp}
 \end{figure}
+在中子共振核反应中，由于共振峰的存在，并根据第一章中的分析，在有限的高频共振能区中含有900多个共振峰，DNN并不能直接很好地应用于中子共振核反应的研究中。
+
+使用DNN训练$^{235}\text{U}(n,f)$评价库数据，如图\ref{u235fp}所示，发现DNN只能较好的学习1/v能区和不可分辨能区的数据，对共振区的数据只能学习大致趋势，无法学到共振细节。为了验证DNN的训练效果不会随着epoch显著增加，可以画出损失函数的变化趋势，如图\ref{fig:u235fploss}所示，可以看出loss值在一定epoch之后不会再发生显著下降，即神经网络的学习效果不会再变好了。
+
+为解决DNN难以学习高频数据这个问题。本文中采用平行相移深度神经网
+络模型\cite{cai2019phasednn}（Parallel Phase Shift Deep Neural Network,PPSDNN）。
 \begin{figure}[htbp!]
     \centering
     \subfigure[epoch:250]{
@@ -237,9 +238,6 @@ f-principle 可以帮助我们理解DNN在不同问题上的优势和局限性�
     \label{fig:u235fploss}
   \end{figure}
 
-
-为解决DNN难以学习高频数据这个问题。本文中采用平行相移深度神经网
-络模型\cite{cai2019phasednn}（Parallel Phase Shift Deep Neural Network,PPSDNN）。
 
 \section{平行相移深度神经网络模型}
 
@@ -267,12 +265,15 @@ f_{j}(x)=\mathcal{F}^{-1}[\widehat{f_{j}}](x).
 对于高频项，通过相移（phase shift）$r_{j}^{\text{shift}}(x_{i})=e^{i\omega_{j}x_{i}}r_{j}(x_{i})$，把高频数据转换成$[-K_0,k_0]$上的低频数据，进而使用DNN训练。将训练得到的结果再通过phase shift还原到高频部分。最后将训练的到的所有结果加起来就是总的训练结果。
 
 PPSDNN算法可按如下几个模块逐步实现：
-\begin{enumerate}
-    \item 傅里叶变换和与尼奎斯特采样定理\cite{vaidyanathan2001generalizations}
-    \item 单位分解定理（POU）
-    \item B-样条函数
-    \item 相移在频域空间中的实现
-\end{enumerate}
+
+    (1) 傅里叶变换和与尼奎斯特采样定理\cite{vaidyanathan2001generalizations}
+
+    (2) 单位分解定理（POU）
+
+    (3) B-样条函数
+
+    (4) 相移在频域空间中的实现
+
 \subsection{傅里叶变换与尼奎斯特采样定理}
 傅里叶变换是把一个函数或一些离散数据从时域空间转换到频域空间，傅里叶逆变换则是从频域空间转换到时域空间\cite{xu2018understanding}。先考虑连续傅里叶变换（CFT）和连续傅里叶逆变换（ICFT），其公式为
     \begin{equation}
@@ -308,9 +309,11 @@ PPSDNN算法可按如下几个模块逐步实现：
     \begin{aligned}\mathcal{F}_{DTFT,\Delta}[g(x)](\xi)&=\frac{1}{\Delta}\sum_{M=-\infty}^\infty\bar{h}(\xi)\\ &=\frac{1}{\Delta}\sum_{M=-\infty}^\infty\hat{g}(\xi+\frac{M}{\Delta}).\end{aligned}
 \end{equation}
 在上式中，左边是离散时间中的采样，右边代表真是信号。其中，左边的$\xi \in [-\frac{1}{2\Delta },\frac{1}{2\Delta }  ]$。于是，可以得到尼奎斯特采样定理\cite{benedetto2001modern}。
+
 \begin{thm}
 一个有限带宽的连续信号可以被采样并且可以从它的采样中完美重构的条件为：采样频率大于真实频率的两倍。
 \end{thm}
+
 有了尼奎斯特采样定理，我们就能知道至少需要多少实验数据点才能学好中子共振截面的数据。
 
 \subsection{单位分解定理}
@@ -323,6 +326,7 @@ PPSDNN算法可按如下几个模块逐步实现：
 
 那么，我们就说该函数组是集合X上的k阶光滑单位分解。
 \end{thm}
+
 在PPSDNN中，我们首先要将一个含有高频部分的目标函数f(x)通过傅里叶变换高频谱函数$\hat{f}(k)$，
 再通过phase shift将频谱转换到$[-K_0,K_0]$的范围。下面考虑
 $\widehat{f}(k)$上的支撑集，因为$\text{supp}\widehat{f}(k)=\{k \in \mathbb{R}|\widehat{f}(k)\ne 0\}$，
@@ -345,15 +349,15 @@ $\widehat{f}(k)$上的支撑集，因为$\text{supp}\widehat{f}(k)=\{k \in \math
 \begin{equation}
     \phi (k) = \chi _{[0,1)}(k)= 
   \left\{\begin{matrix} 
-  1,k \in[0,1)\\ 
-  0,otherwise \\ 
+  1,k \in[0,1),\\ 
+  0,otherwise. \\ 
 \end{matrix}\right.  
 \end{equation}
 则对$\phi _j(k)$而言，$0\le \frac{k-\omega _j}{\Delta k}<1 $时，即$j\Delta k\le k<(j+1)\Delta k$时为1，其余区间为0，即
 \begin{equation}
     \phi _j(k)= \left\{\begin{matrix} 
-  1,k \in[j\Delta k,(j+1)\Delta k)\\ 
-  0,otherwise \\ 
+  1,k \in[j\Delta k,(j+1)\Delta k),\\ 
+  0,otherwise. \\ 
 \end{matrix}\right.
 \end{equation}
 这样的2m个函数$\phi_{-m}(k),\phi_{-m+1}(k),...\phi_{0}(k),...\phi_{m-2}(k),\phi_{m-1}(k),$
@@ -384,9 +388,9 @@ B-样条函数\cite{prochazkova2005derivative}是基于特征函数迭代递推�
 \begin{equation}
     supp B_{m}(k)=[0,m),
 \end{equation}
-下面，分别举m=2和m=3的例子来说明B-样条函数的支撑集以及它的连续性和光滑性。
+下面，分别举$m=2$和$m=3$的例子来说明B-样条函数的支撑集以及它的连续性和光滑性。
 
-当m=2时
+当$m=2$时
 \begin{equation*}
     B_{2}(k)=B_{1}(k)\star B_{1}(k)=\int_{-\infty}^{\infty}B_{1}(k-\lambda)B_{1}(\lambda)d\lambda=
 \int_{0}^{1}B_{1}(k-\lambda)d\lambda .
@@ -407,12 +411,12 @@ B-样条函数\cite{prochazkova2005derivative}是基于特征函数迭代递推�
 \begin{equation}
 B_2(k)=
     \left\{\begin{matrix} 
-k,0\le k<1\\
-2-k,1\le k<2.\\
-0,otherwise
+k,0\le k<1,\\
+2-k,1\le k<2,\\
+0,otherwise.
 \end{matrix}\right. 
 \end{equation}
-可以看出，$B_2(k)$虽然连续，但不光滑。如图\ref{B2}
+可以看出，$B_2(k)$虽然连续，但不光滑。如图\ref{B2}所示。
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.76\linewidth]{figures/B-splin/B2.pdf}
@@ -420,7 +424,7 @@ k,0\le k<1\\
     \label{B2}
 \end{figure}
 
-当m=3时，同理可得
+当$m=3$时，同理可得
 \begin{equation*}
     B_{3}(k)=B_{2}(k)\star B_{1}(k)=\int_{-\infty}^{\infty}B_{2}(k-\lambda)B_{1}(\lambda)d\lambda=
 \int_{0}^{1}B_{2}(k-\lambda)d\lambda .
@@ -433,13 +437,13 @@ k,0\le k<1\\
 \begin{equation}
 B_3(k)=
     \left\{\begin{matrix} 
-\frac{1}{2}k^2 ,0\le k<1\\
-\frac{1}{2}+(k-1)-(k-1)^2 ,1\le k<2\\
-\frac{1}{2}-(k-2)+\frac{1}{2} (k-2)^2 ,2\le k<3\\
-0,otherwise
+\frac{1}{2}k^2 ,0\le k<1,\\
+\frac{1}{2}+(k-1)-(k-1)^2 ,1\le k<2,\\
+\frac{1}{2}-(k-2)+\frac{1}{2} (k-2)^2 ,2\le k<3,\\
+0,otherwise.
 \end{matrix}\right. 
 \end{equation}
-此时，在k=1和k=2处，$B_3(k)$不仅连续，而且光滑（一阶导数连续）。如图\ref{B3}
+此时，在$k=1$和$k=2$处，$B_3(k)$不仅连续，而且光滑（一阶导数连续）。如图\ref{B3}
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.76\linewidth]{figures/B-splin/B3.pdf}
@@ -453,7 +457,7 @@ B_3(k)=
     
     证明：采用归纳法。
 
-    在上文中，我们通过计算m=1,m=2,m=3给出了具体几个常用特例的证明。下面，采用数学归纳法给出普式的m的证明。
+    在上文中，我们通过计算$m=1$,$m=2$,$m=3$给出了具体几个常用特例的证明。下面，采用数学归纳法给出普世的$m$的证明。
 
     设$\text{supp} B_m(k)=[0,m)$,则
     \begin{equation*}
@@ -538,7 +542,7 @@ B_{m}^{\vee}(x)  &  =\left(  B_{1}^{\vee}(x)\right)  ^{m}=\left(  \frac
     3） 样条函数的平移量。
 
 
-然后，在POU的基础上，我们对想要分解的函数f(x)做傅里叶展开（傅里叶逆变换），即
+然后，在POU的基础上，我们对想要分解的函数$f(x)$做傅里叶展开（傅里叶逆变换），即
 \begin{equation}
     f(x) = \frac{1}{\sqrt{2\pi}}\int_{\mathcal{R} }^{}dk\hat{f}(x)e^{ikx} . \label{Ff}
 \end{equation}
@@ -550,7 +554,7 @@ B_{m}^{\vee}(x)  &  =\left(  B_{1}^{\vee}(x)\right)  ^{m}=\left(  \frac
 {\displaystyle\sum\limits_{j=-m}^{m-1}}
 \widehat{f_{j}}(k). \label{k-decomp}
 \end{equation}
-相应的，把\ref{k-decomp}式代入\ref{Ff}式，可以在时域空间里将f(x)做分解
+相应的，把\ref{k-decomp}式代入\ref{Ff}式，可以在时域空间里将$f(x)$做分解
 \begin{equation}
 f(x)=
 {\displaystyle\sum\limits_{j=0}^{m}}
@@ -570,10 +574,10 @@ f_{j}(x)=\mathcal{F}^{-1}[\widehat{f_{j}}](x).
 \begin{equation}
     f_j(x) = \phi_j^{\vee}(x)*f(x)=\int_{-\infty }^{\infty} \phi _j^{\vee}(x-s)f(s)ds .
 \end{equation}
-从上式可以看出，$\phi_j^{\vee}(x)$通过卷积作用到f(x)上得到频率空间为$[\omega_j,\omega_{j+1}]=[j\Delta k,(j+1)\Delta]=[jK_0,(j+1)K_0]$的分量。$f_j(x)$在此称为频率选择函数(frequency selection kernal)。
+从上式可以看出，$\phi_j^{\vee}(x)$通过卷积作用到$f(x)$上得到频率空间为$[\omega_j,\omega_{j+1}]=[j\Delta k,(j+1)\Delta k]=[jK_0,(j+1)K_0]$的分量。$f_j(x)$在此称为频率选择函数(frequency selection kernal)。
 
 基于频率选择函数，就可以实现平行相移。
-设当函数f(x)通过傅里叶变换转换到频域空间，且$|k|<K_0$时，函数处于低频，DNN可以很好的训练f(x)的低频量。对f(x)的高频量$f_j(x)$，我们可以通过乘一个相移因子，将其转换到$|k|<K_0$的区域，具体形式为：
+设当函数$f(x)$通过傅里叶变换转换到频域空间，且$|k|<K_0$时，函数处于低频，DNN可以很好的训练$f(x)$的低频量。对$f(x)$的高频量$f_j(x)$，我们可以通过乘一个相移因子，将其转换到$|k|<K_0$的区域，具体形式为：
 \begin{equation}
     f_j^{\text{shift}}(x) = e^{i\omega_jx}f_j(x) .
 \end{equation}
@@ -581,16 +585,16 @@ f_{j}(x)=\mathcal{F}^{-1}[\widehat{f_{j}}](x).
 \begin{equation}
     f_j^{\text{shift}}(k) = \hat{f}_j(k-\omega_j) .
 \end{equation}
-如果$f_j(k)$的支撑集为$[\omega_j,\omega_{j+1}]$，则$supp[f_j^{\text{shift}}(k)]\subset [0,K_0]$。于是，我们通过phase shift将f(x)的高频部分转换到了低频部分。于是可以将低频部分使用DNN去训练。下面介绍PPSDNN的算法流程。
+如果$f_j(k)$的支撑集为$[\omega_j,\omega_{j+1}]$，则$supp[f_j^{\text{shift}}(k)]\subset [0,K_0]$。于是，我们通过phase shift将$f(x)$的高频部分转换到了低频部分。于是可以将低频部分使用DNN去训练。下面介绍PPSDNN的算法流程。
 
 
 \section{算法流程}
-首先，给定一个要用来训练的目标函数f(x)。我们使用DNN$T_{\star}(x,\theta^{(n_{0}%
+首先，给定一个要用来训练的目标函数$f(x)$。我们使用DNN$T_{\star}(x,\theta^{(n_{0}%
 )}),x\in R,$去逼近它。
 \begin{equation}
 T_{\star}(x,\theta^{(n_{0})})=f_{\text{DNN}}(x)\approx f(x),\label{f1(x)}%
 \end{equation}
-$f_{\text{DNN}}(x)$和f(x)各自对应的低频部分可以拟合的很好，但高频部分仍然会有差距。于是定义余项$r(x)=f(x)-f_{\text{DNN}}(x)$，并规定低频区域
+$f_{\text{DNN}}(x)$和$f(x)$各自对应的低频部分可以拟合的很好，但高频部分仍然会有差距。于是定义余项$r(x)=f(x)-f_{\text{DNN}}(x)$，并规定低频区域
 \begin{equation}
 \left\vert \mathcal{F}[r](k)\right\vert \ll1\text{ for }\left\vert
 k\right\vert <K_{0},
@@ -601,7 +605,7 @@ k\right\vert <K_{0},
 (-K_{0},K_{0}).\label{eq:1psdnn}%
 \end{equation}
 
-如果精确知道r(x)，则$f(x) = r(x) + f_{\text{DNN}}(x)$。为尽量精确求得r(x)，首先将r(x)分解，
+如果精确知道r(x)，则$f(x) = r(x) + f_{\text{DNN}}(x)$。为尽量精确求得$r(x)$，首先将$r(x)$分解，
 \begin{equation}
 r(x)=%
 %TCIMACRO{\dsum \limits_{j=0}^{m}}%
