@@ -13,14 +13,14 @@
 % \frontmatter %前言部分，页码为小写罗马字母格式；其后的\chapter 不编号。
 \input{cover/ccover}
 \includepdf{cover/a.pdf}
-\input{cover/cover}
+% \input{cover/cover}
 \pagenumbering{Roman}
 \begin{spacing}{1.5}%%%控制间距
-\cleardoublepage
+% \cleardoublepage
 \include{abstract/cabstract}
-\cleardoublepage
+% \cleardoublepage
 \include{abstract/eabstract}
-\cleardoublepage
+% \cleardoublepage
 \begingroup
 \ctexset{chapter={format=\xiaosanhao\bfseries\centering\songti\linespread{1.5}}}
 \tableofcontents%%%%目录
@@ -29,7 +29,7 @@
 \endgroup
 
 \renewcommand{\labelenumi}{(\arabic{enumi})}%%%item标号形式
-\cleardoublepage%%%%%%从奇数页开始正文
+% \cleardoublepage%%%%%%从奇数页开始正文
 %\renewcommand\arraystretch{1.5}%%%表格行距1.5
 %\input{format01.tex}
 \pagenumbering{arabic}
@@ -64,14 +64,14 @@
 \phantomsection
 \addcontentsline{toc}{chapter}{致谢}
 \include{appendix/acknowledgements}
-\pagestyle{empty}
-\cleardoublepage
+% \pagestyle{empty}
+% \cleardoublepage
 \phantomsection
 \addcontentsline{toc}{chapter}{论文独创性声明}
 \clearpage
 \phantomsection
 \addcontentsline{toc}{chapter}{论文使用授权声明}
-\include{appendix/announce}
-\includepdf{appendix/announce.pdf}
+% \include{appendix/announce}
+\includepdf{cover/announce.pdf}
 \end{spacing}
 \end{document}
