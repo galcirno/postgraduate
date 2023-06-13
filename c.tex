@@ -27,13 +27,13 @@
 \listoffigures%%%%插图目录
 % \listoftables%%%%表格目录
 \endgroup
-
 \renewcommand{\labelenumi}{(\arabic{enumi})}%%%item标号形式
+\clearpage
+\pagenumbering{arabic}
 % \cleardoublepage%%%%%%从奇数页开始正文
 %\renewcommand\arraystretch{1.5}%%%表格行距1.5
 %\input{format01.tex}
-\pagenumbering{arabic}
-%\mainmatter    %表示开始正文部分的内容 使用数字进行页面编号，对其中的chapter进行编号（第一章、第二章……）
+% \mainmatter    %表示开始正文部分的内容 使用数字进行页面编号，对其中的chapter进行编号（第一章、第二章……）
 % \mainmatter
 \include{chap/chap01}
 \include{chap/chap02}
